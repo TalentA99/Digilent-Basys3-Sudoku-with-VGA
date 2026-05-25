@@ -31,6 +31,7 @@ signal h_cnt, v_cnt : unsigned(9 downto 0) := (others => '0');
 signal h_sync_sig : std_logic := '0';
 signal H_video_on, V_video_on : std_logic := '0';
 
+-- Slightly adjust H_MAX and V_MAX depending on moniter being used
 
 constant left_border : integer := 48;
 constant h_display : integer := 640;
@@ -87,24 +88,28 @@ begin
     end if; 
 end process v_counter;
 
-output_logic : process(clk) 
+output_logic : process(h_cnt, v_cnt)
 begin
-    if rising_edge(clk) then
-        H_video_on <= '0';
-        V_video_on <= '0';
-        if h_cnt < h_display then
-            pixel_x <= std_logic_vector(h_cnt);
-            H_video_on <= '1';
-        else 
-            pixel_x <= (others => '0');
-        end if;
+    if h_cnt < h_display then
+        pixel_x <= std_logic_vector(h_cnt);
+    else
+        pixel_x <= (others => '0');
+    end if;
 
-        if v_cnt < v_display then
-            pixel_y <= std_logic_vector(v_cnt);
-            V_video_on <= '1';
-        else 
-            pixel_y <= (others => '0');
-        end if;
+    if v_cnt < v_display then
+        pixel_y <= std_logic_vector(v_cnt);
+    else 
+        pixel_y <= (others => '0');
+    end if;
+
+    H_video_on <= '0';
+    V_video_on <= '0';
+    if h_cnt < h_display then
+        H_video_on <= '1';
+    end if;
+
+    if v_cnt < v_display then
+        V_video_on <= '1';
     end if;
 end process output_logic;
 
