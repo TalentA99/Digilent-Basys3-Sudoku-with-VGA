@@ -31,7 +31,7 @@ architecture behavioral_architecture of clock_generation is
     constant CLOCK_DIVIDER_TC: integer := CLK_DIVIDER_RATIO / 2;
 
     --Automatic register sizing:
-    constant COUNT_LEN					: integer := integer(ceil( log2( real(CLOCK_DIVIDER_TC) ) ));
+    constant COUNT_LEN					: integer(ceil(log2(real(CLOCK_DIVIDER_TC) + 1.0))) + 1; --to prevent scenario: A COUNT_LEN of 0 produces unsigned(-1 downto 0) — a zero-width signal that is illegal in VHDL simulation and will cause a synthesis error in Vivado.
     signal system_clk_divider_counter	: unsigned(COUNT_LEN-1 downto 0) := (others => '0');
     signal system_clk_tog				: std_logic := '0';
 
