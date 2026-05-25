@@ -49,8 +49,6 @@ begin
 h_counter : process(clk)
 begin
     if rising_edge(clk) then
-        h_sync_sig <= '0';
-
         if h_cnt < h_display + right_border then               
             h_sync_sig <= '1';                    -- display and front porch
         elsif h_cnt < h_display + right_border + h_retrace then
@@ -59,9 +57,10 @@ begin
             h_sync_sig <= '1';                    -- back porch
         end if;
 
-        h_cnt <= h_cnt + 1;
         if h_cnt = H_MAX then   
             h_cnt <= (others => '0');
+        else    
+            h_cnt <= h_cnt + 1;
         end if;
     end if; 
 end process h_counter;
@@ -71,15 +70,16 @@ v_counter : process(clk)
 begin
     if rising_edge(clk) then
         if h_cnt = H_MAX then
-            v_cnt <= v_cnt + 1;
             if v_cnt = V_MAX then
                 v_cnt <= (others => '0');
+            else 
+                v_cnt <= v_cnt + 1;
             end if;
         end if;
 
         if v_cnt < v_display + bottom_border then
             vsync <= '1';
-        elsif v_cnt < display + bottom_border + v_retrace then
+        elsif v_cnt < v_display + bottom_border + v_retrace then
             vsync <= '0';
         else 
             vsync <= '1';

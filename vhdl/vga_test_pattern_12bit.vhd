@@ -15,12 +15,12 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 
-entity vga_test_pattern is
+entity vga_test_pattern_12bit is
 	port(row,column			: in std_logic_vector(9 downto 0);
 		  color					: out std_logic_vector(11 downto 0));
-end vga_test_pattern;
+end vga_test_pattern_12bit;
 
-architecture Behavioral of vga_test_pattern is
+architecture Behavioral of vga_test_pattern_12bit is
 	
 	-- Predefined 8-bit colors that nearly match real test pattern colors
 	constant RED		: std_logic_vector(11 downto 0) := "111100000000";

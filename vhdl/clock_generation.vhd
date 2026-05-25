@@ -11,19 +11,19 @@ use UNISIM.VComponents.all;
 --=============================================================================
 --Entity Declaration:
 --=============================================================================
-entity system_clock_generation is
+entity clock_generation is
     Generic( CLK_DIVIDER_RATIO : integer := 2  );
     Port (
         --External Clock:
         input_clk_port		: in std_logic;
         --System Clock:
         system_clk_port		: out std_logic);
-end system_clock_generation;
+end clock_generation;
 
 --=============================================================================
 --Architecture Type:
 --=============================================================================
-architecture behavioral_architecture of system_clock_generation is
+architecture behavioral_architecture of clock_generation is
     --=============================================================================
     --Signal Declarations: 
     --=============================================================================

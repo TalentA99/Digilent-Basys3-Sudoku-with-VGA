@@ -16,7 +16,7 @@ use IEEE.NUMERIC_STD.ALL;
 --=============================================================================
 entity shell is
 	Generic(
-        CLK_DIVIDER_RATIO : integer := 2);
+        CLK_DIVIDER_RATIO : integer := 4);
     Port ( 	
 			clk_ext_port		: in std_logic;		
 			vgaRed_ext_port 	: out std_logic_vector(3 downto 0);
@@ -87,7 +87,7 @@ vgaBlue_ext_port <= color(3 downto 0);
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --Wire the system clock generator into the shell with a port map:
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-clocking: clock_generation
+clocking : clock_generation
         generic map (
             -- leave this so it can be passed down from the testbench
             clk_divider_ratio => clk_divider_ratio
@@ -96,7 +96,7 @@ clocking: clock_generation
             input_clk_port  => clk_ext_port,     -- External clock
             system_clk_port =>  clk);   -- System clock   
 
-display : vga_test_pattern_12bit port map (
+vga_test : vga_test_pattern_12bit port map (
 	row => pixel_y,
 	column => pixel_x, 
 	color => color
