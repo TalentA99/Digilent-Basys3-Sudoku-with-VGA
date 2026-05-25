@@ -16,7 +16,7 @@ use IEEE.NUMERIC_STD.ALL;
 --=============================================================================
 entity top_level is
 	Generic(
-        CLK_DIVIDER_RATIO : integer := 50);
+        CLK_DIVIDER_RATIO : integer := 2);
     Port ( 	
 			clk_ext_port		: in std_logic;		
 			vgaRed_ext_port 	: out std_logic_vector(3 downto 0);
@@ -38,7 +38,7 @@ architecture behavioral_architecture of shell is
 --System Clock Generation:
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 component system_clock_generation is
-    Generic( CLK_DIVIDER_RATIO : integer );
+    	Generic( CLK_DIVIDER_RATIO : integer );
         Port (
             --External Clock:
             input_clk_port		: in std_logic;
@@ -49,9 +49,7 @@ end component;
 --=============================================================================
 --Signal Declarations: 
 --=============================================================================
---+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --Timing:
---+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 signal clk: std_logic := '0';
 
 --=============================================================================
@@ -61,8 +59,13 @@ begin
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --Wire the system clock generator into the shell with a port map:
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-clocking: lab4_system_clock_generation port map(
-    input_clk_port  => clk_ext_port,   
-    system_clk_port => clk );   
+clocking: system_clock_generation
+        generic map (
+            -- leave this so it can be passed down from the testbench
+            clk_divider_ratio => clk_divider_ratio
+        )
+        port map(
+            input_clk_port  => clk_ext_port,     -- External clock
+            system_clk_port =>  clk);   -- System clock   
     
 end behavioral_architecture;

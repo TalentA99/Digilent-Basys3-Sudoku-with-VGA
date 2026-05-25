@@ -17,16 +17,17 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity vga_sync is
 	port( clk	        		: in std_logic;
-		  color					: out std_logic_vector(11 downto 0)
-          color					: out std_logic_vector(11 downto 0)
-          color					: out std_logic_vector(11 downto 0)
-          color					: out std_logic_vector(11 downto 0)
-          color					: out std_logic_vector(11 downto 0));
+		  pixel_x					: out std_logic_vector(9 downto 0);
+          pixel_y					: out std_logic_vector(9 downto 0);
+          video_on					: out std_logic;
+          hsync					    : out std_logic;
+          vsync					    : out std_logic);
 end vga_test_pattern;
 
 architecture Behavioral of vga_test_pattern is
 	
 -- signals
+signal 
 
 begin
 
